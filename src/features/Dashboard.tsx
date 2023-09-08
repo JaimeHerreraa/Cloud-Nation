@@ -19,6 +19,7 @@ import solarWidgetIcon from "../assets/solar-widget-icon.svg";
 import databaseIcon from "../assets/database-icon.svg";
 import folderIcon from "../assets/folder-icon.svg";
 import notebookIcon from "../assets/notebook-icon.svg";
+import Footer from "../components/Footer";
 
 type CardProps = {
   title: string;
@@ -81,6 +82,7 @@ const Dashboard = () => {
       >
         <Main />
       </Container>
+      <Footer />
     </>
   );
 };

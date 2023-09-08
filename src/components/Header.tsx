@@ -10,7 +10,9 @@ import {
   Container,
   List,
   ListItem,
+  Fade,
 } from "@chakra-ui/react";
+import { useBoolean } from "@chakra-ui/react";
 
 import avatar from "../assets/avatar.jpeg";
 import bellIcon from "../assets/bell-icon.svg";
@@ -22,21 +24,39 @@ import widgetIcon from "../assets/widget-bold-icon.svg";
 import solarWidgetIcon from "../assets/solar-widget-icon.svg";
 import databaseIcon from "../assets/database-icon.svg";
 import hamburgerMenuIcon from "../assets/hamburger-menu-icon.svg";
+import sunIcon from "../assets/sun-icon.svg";
+import switchIcon from "../assets/switch-icon.svg";
+import moonIcon from "../assets/moon-icon.svg";
 
 const Header = () => {
+  const [isMenuOpen, setIsMenuOpen] = useBoolean();
+  const [isProfileOpen, setIsProfileOpen] = useBoolean();
+  const hideNav = !isProfileOpen && (!isMenuOpen || isMenuOpen);
+
   return (
     <Flex flexDirection="column" as="nav">
-      <TopNav />
-      <BottomNav />
+      <TopNav setIsProfileOpen={setIsProfileOpen} isMenuOpen={isMenuOpen} />
+      {hideNav && <BottomNav setIsMenuOpen={setIsMenuOpen} />}
+      <Fade in={isProfileOpen}>
+        {isProfileOpen && isMenuOpen === false && <ProfileMenu />}
+      </Fade>
+      <Fade in={isMenuOpen}>{isMenuOpen && <HamburgerMenu />}</Fade>
     </Flex>
   );
 };
 
-const TopNav = () => {
+const TopNav = ({
+  setIsProfileOpen,
+  isMenuOpen,
+}: {
+  setIsProfileOpen: any;
+  isMenuOpen: boolean;
+}) => {
   return (
     <Box
       bgColor="var(--light-surface-sf-primary)"
       borderBottom="0.75px solid var(--light-stroke-stroke-dark)"
+      position="relative"
     >
       <Container
         maxW="1536px"
@@ -54,7 +74,10 @@ const TopNav = () => {
         >
           CloudNation.
         </Heading>
-        <QuickSearch width={{ base: "230px", lg: "350px", xl: "450px" }} />
+        <QuickSearch
+          width={{ base: "230px", lg: "350px", xl: "450px" }}
+          display={{ base: "none", md: "flex" }}
+        />
         <Box display="flex" alignItems="center" gap="20px">
           <Image
             display={{ base: "none", md: "inline-block", lg: "none" }}
@@ -63,23 +86,27 @@ const TopNav = () => {
             src={gridIcon}
             alt="grid icon"
           />
+          <Box display={{ base: "none", md: "none", lg: "flex" }} gap="20px">
+            <CreditsButton />
+            <AddButton />
+          </Box>
           <Image
-            display={{ base: "none", md: "inline-block", lg: "none" }}
+            display={{ base: "none", md: "inline-block", lg: "inline-block" }}
             width="22px"
             height="22px"
             src={bellIcon}
             alt="bell icon"
           />
-          <Box display={{ base: "none", md: "none", lg: "flex" }} gap="20px">
-            <CreditsButton />
-            <AddButton />
-          </Box>
           <Image
             src={avatar}
             alt="user icon"
             width="35px"
             height="35px"
             borderRadius="50%"
+            cursor="pointer"
+            onClick={
+              isMenuOpen ? setIsProfileOpen.off : setIsProfileOpen.toggle
+            }
           />
         </Box>
       </Container>
@@ -87,7 +114,7 @@ const TopNav = () => {
   );
 };
 
-const BottomNav = () => {
+const BottomNav = ({ setIsMenuOpen }: { setIsMenuOpen: any }) => {
   return (
     <Box bgColor="var(--light-surface-sf-tertiary)">
       <Container
@@ -130,6 +157,8 @@ const BottomNav = () => {
               alt="widget icon"
               w="20px"
               h="20px"
+              cursor="pointer"
+              onClick={setIsMenuOpen.toggle}
             />
           </ListItem>
           <ListItem display={{ base: "none", md: "inline-block" }}>
@@ -144,13 +173,87 @@ const BottomNav = () => {
   );
 };
 
-const QuickSearch = ({ width }: { width: any }) => {
+const HamburgerMenu = () => {
   return (
-    <InputGroup
-      w={width}
-      display={{ base: "none", md: "flex" }}
-      alignItems="center"
+    <Flex
+      flexDirection="column"
+      padding="15px"
+      gap="10px"
+      borderBottom="0.25px solid var(--light-stroke-stroke-dark)"
+      bgColor="var(--light-surface-sf-primary)"
     >
+      <QuickSearch width="100%" display="flex" />
+      <List
+        display="flex"
+        flexDirection="column"
+        gap="10px"
+        fontFamily="Manrope"
+        fontWeight="500"
+        fontSize="18px"
+      >
+        <ListItem>
+          <Text>Docs</Text>
+        </ListItem>
+        <ListItem>
+          <Text>Support</Text>
+        </ListItem>
+        <ListItem>
+          <Text>Notifications</Text>
+        </ListItem>
+      </List>
+      <Box display="flex" gap="15px" justifyContent="center">
+        <CreditsButton />
+        <AddButton />
+      </Box>
+    </Flex>
+  );
+};
+
+const ProfileMenu = () => {
+  return (
+    <List
+      display="flex"
+      flexDirection="column"
+      alignItems="center"
+      gap="10px"
+      fontFamily="Manrope"
+      fontWeight="600"
+      fontSize="18px"
+      padding="15px"
+      borderBottom="0.25px solid var(--light-stroke-stroke-dark)"
+      bgColor="var(--light-surface-sf-primary)"
+    >
+      <ListItem display="flex" flexDirection="column" alignItems="center">
+        <Text>Account</Text>
+        <Text
+          fontWeight="500"
+          fontSize="15px"
+          color="var(--light-text-text-secondary)"
+        >
+          prathyushk@gmail.com
+        </Text>
+      </ListItem>
+      <ListItem>
+        <Text>Docs</Text>
+      </ListItem>
+      <ListItem>
+        <Text>Support</Text>
+      </ListItem>
+      <ListItem>
+        <Text>Notifications</Text>
+      </ListItem>
+      <ListItem display="flex" gap="9px">
+        <Image src={sunIcon} alt="sun icon" />
+        <Image src={switchIcon} alt="switch icon" />
+        <Image src={moonIcon} alt="moon icon" />
+      </ListItem>
+    </List>
+  );
+};
+
+const QuickSearch = ({ width, display }: { width: any; display: any }) => {
+  return (
+    <InputGroup w={width} display={display} alignItems="center">
       <Input
         placeholder="Quick Search"
         fontFamily="Manrope"
