@@ -104,7 +104,7 @@ const TopNav = ({
           />
           <Box display={{ base: "none", md: "none", lg: "flex" }} gap="20px">
             <CreditsButton />
-            <AddButton />
+            <HamburgerMenuDesktop />
           </Box>
           <Image
             display={{ base: "none", md: "inline-block", lg: "inline-block" }}
@@ -319,6 +319,85 @@ const ProfileMenuDesktop = () => {
             <Image src={sunIcon} alt="sun icon" w="16px" h="16px" />
             <Image src={switchIcon} alt="switch icon" w="16px" h="16px" />
             <Image src={moonIcon} alt="moon icon" w="16px" h="16px" />
+          </ListItem>
+        </List>
+      </PopoverContent>
+    </Popover>
+  );
+};
+
+const HamburgerMenuDesktop = () => {
+  return (
+    <Popover autoFocus={false}>
+      <PopoverTrigger>
+        <Flex
+          as="button"
+          gap="10px"
+          borderRadius="10px"
+          bgColor="var(--light-brand-rebecca-100)"
+          padding="10px 14px"
+          fontFamily="Archivo"
+          color="#ffffff"
+          alignItems="center"
+        >
+          <Text fontSize="14px" fontWeight="normal">
+            Add New
+          </Text>
+          <Image src={arrowIcon} alt="arrow icon" />
+        </Flex>
+      </PopoverTrigger>
+      <PopoverContent
+        bg="var(--light-surface-sf-primary)"
+        border=" 0.75px solid var(--light-stroke-stroke-light)"
+        borderRadius="0px 0px 10px 10px"
+        w="auto"
+      >
+        <PopoverArrow />
+        <List
+          display="flex"
+          flexDirection="column"
+          fontFamily="Archivo"
+          fontWeight="500"
+          fontSize="12px"
+          gap="12px"
+          padding="15px 25px"
+        >
+          <ListItem
+            display="flex"
+            gap="4px"
+            cursor="pointer"
+            borderRadius=" 5px"
+            border=" 0.25px solid var(--light-stroke-stroke-light)"
+            padding="5px 8px"
+            w="120px"
+          >
+            <Image src={laptopIcon} alt="laptop icon" w="16px" h="16px" />
+            <Text>New App</Text>
+          </ListItem>
+          <ListItem
+            display="flex"
+            gap="4px"
+            cursor="pointer"
+            borderRadius=" 5px"
+            border=" 0.25px solid var(--light-stroke-stroke-light)"
+            padding="5px 8px"
+            alignItems="center"
+            w="120px"
+          >
+            <Image src={serverIcon} alt="server icon" w="16px" h="16px" />
+            <Text>New Datastore</Text>
+          </ListItem>
+          <ListItem
+            display="flex"
+            gap="4px"
+            cursor="pointer"
+            borderRadius=" 5px"
+            border=" 0.25px solid var(--light-stroke-stroke-light)"
+            padding="5px 8px"
+            w="120px"
+          >
+            <Image src={solarWidgetIcon} alt="widget icon" w="16px" h="16px" />
+            <Text>New Cluster</Text>
           </ListItem>
         </List>
       </PopoverContent>
