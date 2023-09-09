@@ -14,12 +14,15 @@ import {
 } from "@chakra-ui/react";
 
 import Header from "../components/Header";
-import laptopIcon from "../assets/laptop-icon.svg";
-import solarWidgetIcon from "../assets/solar-widget-icon.svg";
-import databaseIcon from "../assets/database-icon.svg";
-import folderIcon from "../assets/folder-icon.svg";
-import notebookIcon from "../assets/notebook-icon.svg";
 import Footer from "../components/Footer";
+
+import {
+  laptopIcon,
+  solarWidgetIcon,
+  databaseIcon,
+  folderIcon,
+  notebookIcon,
+} from "../assets";
 
 type CardProps = {
   title: string;
@@ -78,7 +81,7 @@ const Dashboard = () => {
       <Container
         maxWidth="1150px"
         paddingX={{ base: "15px", md: "50px" }}
-        marginY="30px"
+        marginY={{ base: "30px", md: "50px" }}
       >
         <Main />
       </Container>

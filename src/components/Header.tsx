@@ -11,22 +11,38 @@ import {
   List,
   ListItem,
   Fade,
+  Popover,
+  PopoverTrigger,
+  PopoverContent,
+  PopoverArrow,
+  PopoverHeader,
+  PopoverCloseButton,
+  PopoverBody,
+  ButtonGroup,
+  PopoverFooter,
 } from "@chakra-ui/react";
 import { useBoolean } from "@chakra-ui/react";
 
-import avatar from "../assets/avatar.jpeg";
-import bellIcon from "../assets/bell-icon.svg";
-import gridIcon from "../assets/grid-icon.svg";
-import lightningIcon from "../assets/lightning-icon.svg";
-import lightningSearchIcon from "../assets/lightning-search-icon.svg";
-import arrowIcon from "../assets/arrow-icon.svg";
-import widgetIcon from "../assets/widget-bold-icon.svg";
-import solarWidgetIcon from "../assets/solar-widget-icon.svg";
-import databaseIcon from "../assets/database-icon.svg";
-import hamburgerMenuIcon from "../assets/hamburger-menu-icon.svg";
-import sunIcon from "../assets/sun-icon.svg";
-import switchIcon from "../assets/switch-icon.svg";
-import moonIcon from "../assets/moon-icon.svg";
+import {
+  avatar,
+  bellIcon,
+  gridIcon,
+  lightningIcon,
+  lightningSearchIcon,
+  arrowIcon,
+  widgetIcon,
+  solarWidgetIcon,
+  databaseIcon,
+  hamburgerMenuIcon,
+  sunIcon,
+  switchIcon,
+  moonIcon,
+  settingsIcon,
+  billingIcon,
+  signOutIcon,
+  laptopIcon,
+  serverIcon,
+} from "../assets";
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useBoolean();
@@ -103,11 +119,12 @@ const TopNav = ({
             width="35px"
             height="35px"
             borderRadius="50%"
-            cursor="pointer"
+            display={{ base: "inline-block", md: "none" }}
             onClick={
               isMenuOpen ? setIsProfileOpen.off : setIsProfileOpen.toggle
             }
           />
+          <ProfileMenuDesktop />
         </Box>
       </Container>
     </Box>
@@ -248,6 +265,64 @@ const ProfileMenu = () => {
         <Image src={moonIcon} alt="moon icon" />
       </ListItem>
     </List>
+  );
+};
+
+const ProfileMenuDesktop = () => {
+  return (
+    <Popover autoFocus={false}>
+      <PopoverTrigger>
+        <Image
+          src={avatar}
+          alt="user icon"
+          w="35px"
+          h="35px"
+          borderRadius="50%"
+          cursor="pointer"
+          display={{ base: "none", md: "inline-block" }}
+        />
+      </PopoverTrigger>
+      <PopoverContent
+        bg="var(--light-surface-sf-primary)"
+        border=" 0.75px solid var(--light-stroke-stroke-light)"
+        borderRadius="0px 0px 10px 10px"
+        w="155px"
+        p="15px"
+      >
+        <PopoverArrow />
+        <List
+          display="flex"
+          flexDirection="column"
+          fontFamily="Manrope"
+          fontWeight="500"
+          fontSize="12px"
+          alignItems="center"
+          gap="12px"
+        >
+          <ListItem display="flex" alignItems="center" flexDirection="column">
+            <Text>Account</Text>
+            <Text>prathyushk@gmail.com</Text>
+          </ListItem>
+          <ListItem display="flex" gap="5px" cursor="pointer">
+            <Image src={settingsIcon} alt="setting icon" />
+            <Text>Settings</Text>
+          </ListItem>
+          <ListItem display="flex" gap="5px" cursor="pointer">
+            <Image src={billingIcon} alt="billing icon" />
+            <Text>Billing</Text>
+          </ListItem>
+          <ListItem display="flex" gap="5px" cursor="pointer">
+            <Image src={signOutIcon} alt="signout icon" />
+            <Text>Sign Out</Text>
+          </ListItem>
+          <ListItem display="flex" gap="4px" cursor="pointer">
+            <Image src={sunIcon} alt="sun icon" w="16px" h="16px" />
+            <Image src={switchIcon} alt="switch icon" w="16px" h="16px" />
+            <Image src={moonIcon} alt="moon icon" w="16px" h="16px" />
+          </ListItem>
+        </List>
+      </PopoverContent>
+    </Popover>
   );
 };
 
